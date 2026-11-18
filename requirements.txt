@@ -1,6 +1,7 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
 streamlit>=1.40.0,<2.0.0
-torch>=2.2.0,<3.0.0
-torchvision>=0.17.0,<1.0.0
+torch
+torchvision
 scikit-learn>=1.4.0,<2.0.0
 pandas>=2.1.0,<3.0.0
 numpy>=1.26.0,<3.0.0
