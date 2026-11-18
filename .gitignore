@@ -1,0 +1,26 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+env/
+mars_env/
+.env
+
+# Streamlit local state and secrets
+.streamlit/secrets.toml
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Machine learning models & temporary files
+*.joblib
+*.pkl
+*.pth
+*.pt
+tmp/
+scratch/

@@ -1,24 +1,95 @@
-# Mars Surface Atlas — Orange Embeddings Edition
+# Mars Surface Atlas — Planetary Terrain Classifier
 
-This version restores the original Orange + Python feature pipeline.
+An image-based machine learning application for classifying Martian terrain into **Rocky** (navigational hazards and boulder fields) and **Smooth** (navigable regolith and sand plains), directly deployable to **Streamlit Community Cloud**.
 
-## Training
-1. In Orange, connect **Import Images → Image Embedding (SqueezeNet) → Save Data**.
-2. Export the labelled table as CSV, keeping `category` and `n0`–`n999`.
-3. In this app, open **01 · Train model** and upload the CSV.
-4. The app uses the original Random Forest settings: 300 trees, random state 42, balanced class weights, stratified 75/25 holdout.
-5. Download the trained `.joblib` model bundle.
+---
 
-## Prediction
-1. Put new images in a separate folder.
-2. In Orange, run **Import Images → Image Embedding (SqueezeNet) → Save Data** with the same widget setup.
-3. Export the new embedding CSV. It must contain `n0`–`n999`; `category` is not needed.
-4. Open **02 · Classify images**, load the trained model, and upload the new CSV.
-5. Review/download predictions.
+## 🚀 Key Features
 
-**Do not upload raw JPG/PNG files to the prediction uploader.** Orange must create their SqueezeNet embeddings first.
+1. **Direct Image Upload & Feature Extraction**
+   - Upload raw Mars images (`.jpg`, `.jpeg`, `.png`) directly in the browser.
+   - Extracts continuous 512-dimensional bottleneck visual representations using a pretrained **SqueezeNet v1.1** backbone (`features` block + Adaptive Average Pooling).
+   - Does **not** use arbitrary ImageNet classification logits.
 
-## Deploy
-Upload `app.py`, `requirements.txt`, `README.md`, `LIBRARIES.md`, `.gitignore`, and `.streamlit/config.toml` to the GitHub repository. Set Streamlit's main file to `app.py`; Python 3.12 is recommended.
+2. **Multi-Model Benchmark & Model Selection**
+   - Compares **Random Forest (300 trees)**, **SVM with RBF Kernel**, **Linear SVM**, and **Logistic Regression Transfer Head**.
+   - Evaluates performance using held-out validation accuracy, precision, recall, macro F1-score, and confusion matrices.
+   - Automatically selects the best model or allows manual selection.
 
-The app reads Orange CSVs using the original `header=0, skiprows=[1, 2]` format when those metadata rows are present, with a fallback for ordinary CSVs.
+3. **Data Leakage & Contamination Guard**
+   - Planetary rover imagery often contains burst frames (near-duplicates).
+   - Perceptual difference hashing (`dHash`) automatically audits uploads to flag near-duplicate frames and alert if conflicting labels exist.
+
+4. **Prediction with Uncertainty Warnings**
+   - Upload new, unseen Mars surface imagery for batch classification.
+   - Calibrated probability scores for Rocky and Smooth terrain.
+   - Dynamic uncertainty threshold flags predictions where model confidence is below specified limits.
+   - Export results as a downloadable CSV.
+
+5. **Stateless Model Persistence**
+   - Streamlit Community Cloud ephemeral worker containers do not maintain persistent local disk storage across reboots.
+   - Models are serialized into self-contained `.joblib` bundles that can be downloaded and reloaded into any session instantly.
+
+6. **Refined Light-Only UI**
+   - Warm ivory palette (`#F7F5F0`), white cards, dark charcoal text (`#1C1C18`), and muted terracotta accents (`#A94F37`).
+   - Clean contrast, responsive typography, and no dark-mode glitches.
+
+---
+
+## 🛠️ Streamlit Community Cloud Deployment
+
+Deploying this repository to Streamlit Community Cloud takes less than 2 minutes:
+
+1. **Push this repository to GitHub** under your GitHub account.
+2. Sign in to [Streamlit Community Cloud](https://share.streamlit.io/).
+3. Click **"New app"**.
+4. Select your repository: `titanboopbeep/Mars-Surface-Atlas-Orange-Embeddings` (or your fork/renamed repo).
+5. Set:
+   - **Branch**: `main`
+   - **Main file path**: `app.py`
+   - **Python version**: `3.12` (or `3.11`)
+6. Click **"Deploy!"**.
+
+---
+
+## 💻 Local Development Setup
+
+To run locally on your computer:
+
+```bash
+# 1. Clone repository
+git clone https://github.com/titanboopbeep/Mars-Surface-Atlas-Orange-Embeddings.git
+cd Mars-Surface-Atlas-Orange-Embeddings
+
+# 2. Create virtual environment (Python 3.11 or 3.12 recommended)
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+
+# 4. Launch Streamlit
+streamlit run app.py
+```
+
+---
+
+## 📦 Repository Structure
+
+```
+├── .streamlit/
+│   └── config.toml          # Streamlit theme (warm ivory light palette) & server config
+├── .gitignore               # Ignores bytecode, caches, models, and virtual environments
+├── app.py                   # Streamlit web interface and session state management
+├── ml_engine.py             # SqueezeNet feature extractor, perceptual hashing, and ML pipelines
+├── requirements.txt         # Minimal, pinned dependencies (torch, torchvision, scikit-learn, etc.)
+└── README.md                # Documentation and deployment guide
+```
+
+---
+
+## 🔬 Scientific & Engineering Methodology
+
+- **Backbone**: SqueezeNet v1.1 (Iandola et al.) pretrained on ImageNet. Chosen for its compact parameter footprint (4.8MB), fast CPU inference in cloud environments, and strong spatial feature extraction in early convolutional fire modules.
+- **Pooling**: Adaptive Average Pooling converts spatial feature activations `(512, 13, 13)` into a single 512-dimensional continuous embedding vector per image.
+- **Honest Evaluation**: No manufactured 100% metrics. Accuracy and F1 scores are calculated strictly on unseen holdout splits.
