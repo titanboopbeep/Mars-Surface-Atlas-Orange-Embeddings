@@ -4,19 +4,19 @@ An image-based machine learning application for classifying Martian terrain into
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-1. **Direct Image Upload & Feature Extraction**
+1. **Direct Image Upload and Feature Extraction**
    - Upload raw Mars images (`.jpg`, `.jpeg`, `.png`) directly in the browser.
    - Extracts continuous 512-dimensional bottleneck visual representations using a pretrained **SqueezeNet v1.1** backbone (`features` block + Adaptive Average Pooling).
    - Does **not** use arbitrary ImageNet classification logits.
 
-2. **Multi-Model Benchmark & Model Selection**
+2. **Multi-Model Benchmark and Model Selection**
    - Compares **Random Forest (300 trees)**, **SVM with RBF Kernel**, **Linear SVM**, and **Logistic Regression Transfer Head**.
    - Evaluates performance using held-out validation accuracy, precision, recall, macro F1-score, and confusion matrices.
    - Automatically selects the best model or allows manual selection.
 
-3. **Data Leakage & Contamination Guard**
+3. **Data Leakage and Contamination Guard**
    - Planetary rover imagery often contains burst frames (near-duplicates).
    - Perceptual difference hashing (`dHash`) automatically audits uploads to flag near-duplicate frames and alert if conflicting labels exist.
 
@@ -31,12 +31,12 @@ An image-based machine learning application for classifying Martian terrain into
    - Models are serialized into self-contained `.joblib` bundles that can be downloaded and reloaded into any session instantly.
 
 6. **Refined Light-Only UI**
-   - Warm ivory palette (`#F7F5F0`), white cards, dark charcoal text (`#1C1C18`), and muted terracotta accents (`#A94F37`).
-   - Clean contrast, responsive typography, and no dark-mode glitches.
+   - Professional executive styling with warm ivory palette (`#F7F5F0`), white cards, dark charcoal text (`#1C1C18`), and muted terracotta accents (`#A94F37`).
+   - Clean contrast, responsive typography, and zero emoji clutter.
 
 ---
 
-## 🛠️ Streamlit Community Cloud Deployment
+## Streamlit Community Cloud Deployment
 
 Deploying this repository to Streamlit Community Cloud takes less than 2 minutes:
 
@@ -52,7 +52,7 @@ Deploying this repository to Streamlit Community Cloud takes less than 2 minutes
 
 ---
 
-## 💻 Local Development Setup
+## Local Development Setup
 
 To run locally on your computer:
 
@@ -74,7 +74,7 @@ streamlit run app.py
 
 ---
 
-## 📦 Repository Structure
+## Repository Structure
 
 ```
 ├── .streamlit/
@@ -88,7 +88,7 @@ streamlit run app.py
 
 ---
 
-## 🔬 Scientific & Engineering Methodology
+## Scientific and Engineering Methodology
 
 - **Backbone**: SqueezeNet v1.1 (Iandola et al.) pretrained on ImageNet. Chosen for its compact parameter footprint (4.8MB), fast CPU inference in cloud environments, and strong spatial feature extraction in early convolutional fire modules.
 - **Pooling**: Adaptive Average Pooling converts spatial feature activations `(512, 13, 13)` into a single 512-dimensional continuous embedding vector per image.

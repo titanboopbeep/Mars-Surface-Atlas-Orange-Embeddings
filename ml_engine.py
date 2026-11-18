@@ -194,7 +194,6 @@ def train_and_evaluate_models(
     best_metrics = {}
 
     for name, model_inst in candidates.items():
-        # Fit on training fold
         model_inst.fit(X_train, y_train)
         y_pred = model_inst.predict(X_test)
 
@@ -230,7 +229,6 @@ def train_and_evaluate_models(
 
     assert best_name is not None
 
-    # Refit winning model architecture on ALL training data for final production bundle
     final_model = get_candidate_models()[best_name]
     final_model.fit(X, y)
 
@@ -278,7 +276,7 @@ def predict_images(
             "Confidence": confidence,
             "Rocky Score": rocky_score,
             "Smooth Score": smooth_score,
-            "Uncertainty Warning": "⚠️ Low Confidence (< 65%)" if uncertain else "Confident",
+            "Uncertainty Warning": "Low Confidence (< 65%)" if uncertain else "Confident",
             "Is Uncertain": uncertain,
         })
     return results
