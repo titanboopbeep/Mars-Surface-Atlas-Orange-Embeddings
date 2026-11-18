@@ -1,8 +1,8 @@
 MARS SURFACE ATLAS — TEAM QUICK-START GUIDE
 ============================================
 
-Hey team, here is a quick guide on how to use our Mars terrain classifier website.
-You do not need any coding knowledge or extra software installed. Everything runs directly in your browser.
+Hey team, here is the step-by-step guide on how to use our Mars terrain classifier website.
+Because the website gives each person their own fresh session, STEP 1 is always training the model.
 
 
 WHAT DOES THIS APP DO?
@@ -12,41 +12,45 @@ The app analyzes Mars surface photos and sorts them into two categories:
 - SMOOTH: Safe terrain with flat regolith, sand, or gentle dunes that are safe for rover travel.
 
 
-HOW TO USE THE APP
-------------------
+WORKFLOW (STEP-BY-STEP)
+-----------------------
 
-STEP 1: CLASSIFYING NEW MARS PHOTOS (Most common task)
-1. Open the website and click on the "02 · Classify Images" tab at the top.
+STEP 1: TRAIN THE MODEL (Start here)
+Every new visitor must complete this first so the website has an active model to work with:
+1. Open the website link. You will land on "01 · Train Model".
+2. In the left box, upload your labelled Rocky training photos (at least 3 photos).
+3. In the right box, upload your labelled Smooth training photos (at least 3 photos).
+4. Click the red button: "Extract SqueezeNet Features and Train Classifier".
+5. Wait a few seconds while it extracts visual features and picks the best model.
+6. Once it succeeds:
+   - You will see the accuracy, precision, and recall scores.
+   - Any duplicate or conflicting photos will be flagged automatically.
+   - Optional: Click "Download Trained Model (.joblib)" to save a copy to your computer.
+
+
+STEP 2: CLASSIFY NEW MARS IMAGES
+Now that your model is active:
+1. Click on the "02 · Classify Images" tab at the top.
 2. Drag and drop any new Mars JPG or PNG images into the upload box.
 3. Click the red button: "Classify Mars Images".
-4. View the results:
-   - Each photo gets a card showing its label (ROCKY or SMOOTH).
-   - Each photo shows a confidence percentage (e.g., 94% confident).
-   - If an image is tricky or ambiguous, the app shows a "Low Confidence" warning tag.
-5. Click "Download Predictions CSV" if you want to export an Excel-ready spreadsheet of all results.
+4. Review the results:
+   - Each photo shows whether it is ROCKY or SMOOTH.
+   - Each photo displays a confidence percentage (e.g., 94% confident).
+   - If an image is tricky, you will see a "Low Confidence" warning tag.
+5. Click "Download Predictions CSV" to export an Excel-ready spreadsheet of all predictions.
 
 
-STEP 2: TRAINING A NEW MODEL
-1. Click on the "01 · Train Model" tab.
-2. In the left box, upload your rocky training photos (upload at least 3 photos).
-3. In the right box, upload your smooth training photos (upload at least 3 photos).
-4. Click "Extract SqueezeNet Features and Train Classifier".
-5. When finished, you will see:
-   - Overall accuracy, precision, and recall scores.
-   - An automatic duplicate audit (flags identical photos or accidental conflicting labels).
-6. Click "Download Trained Model (.joblib)" to save the trained model file to your computer.
+SHORTCUT FOR NEXT TIME (Skip Step 1 with a Saved Model)
+-------------------------------------------------------
+If you already saved a `.joblib` file from Step 1 (or if someone on the team sends you one):
+1. Go directly to "02 · Classify Images".
+2. Click "Load an existing .joblib model bundle (Optional)".
+3. Upload the `.joblib` file.
+4. You can skip Step 1 entirely and start classifying photos immediately.
 
 
-STEP 3: RE-USING A SAVED MODEL FILE (.joblib)
-- Because free cloud servers restart when inactive, you do not need to retrain from scratch every time:
-1. Go to the "02 · Classify Images" tab.
-2. Click the expander called "Load an existing .joblib model bundle (Optional)".
-3. Upload the .joblib file that was previously downloaded.
-4. You are ready to classify new photos immediately.
-
-
-HELPFUL TIPS FOR THE TEAM
--------------------------
-- Use clear photos: Sharp, well-lit surface photos give the most accurate predictions.
-- Pay attention to "Low Confidence" tags: Photos with mixed sand and pebbles will be flagged so you can inspect them manually.
-- The app automatically ignores duplicate pictures during training so your scores stay honest.
+HELPFUL TIPS
+------------
+- Photos: Clear, well-lit surface photos give the best results.
+- Duplicate Protection: The app automatically detects duplicate images to prevent biased scores.
+- Low Confidence Tags: Any photo with mixed sand and pebbles will be flagged for manual review.
