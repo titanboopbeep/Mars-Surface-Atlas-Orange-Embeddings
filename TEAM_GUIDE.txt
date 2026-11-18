@@ -1,0 +1,52 @@
+MARS SURFACE ATLAS — TEAM QUICK-START GUIDE
+============================================
+
+Hey team, here is a quick guide on how to use our Mars terrain classifier website.
+You do not need any coding knowledge or extra software installed. Everything runs directly in your browser.
+
+
+WHAT DOES THIS APP DO?
+----------------------
+The app analyzes Mars surface photos and sorts them into two categories:
+- ROCKY: Hazardous terrain with boulders, rocks, and rough outcrops that could trap or damage a rover.
+- SMOOTH: Safe terrain with flat regolith, sand, or gentle dunes that are safe for rover travel.
+
+
+HOW TO USE THE APP
+------------------
+
+STEP 1: CLASSIFYING NEW MARS PHOTOS (Most common task)
+1. Open the website and click on the "02 · Classify Images" tab at the top.
+2. Drag and drop any new Mars JPG or PNG images into the upload box.
+3. Click the red button: "Classify Mars Images".
+4. View the results:
+   - Each photo gets a card showing its label (ROCKY or SMOOTH).
+   - Each photo shows a confidence percentage (e.g., 94% confident).
+   - If an image is tricky or ambiguous, the app shows a "Low Confidence" warning tag.
+5. Click "Download Predictions CSV" if you want to export an Excel-ready spreadsheet of all results.
+
+
+STEP 2: TRAINING A NEW MODEL
+1. Click on the "01 · Train Model" tab.
+2. In the left box, upload your rocky training photos (upload at least 3 photos).
+3. In the right box, upload your smooth training photos (upload at least 3 photos).
+4. Click "Extract SqueezeNet Features and Train Classifier".
+5. When finished, you will see:
+   - Overall accuracy, precision, and recall scores.
+   - An automatic duplicate audit (flags identical photos or accidental conflicting labels).
+6. Click "Download Trained Model (.joblib)" to save the trained model file to your computer.
+
+
+STEP 3: RE-USING A SAVED MODEL FILE (.joblib)
+- Because free cloud servers restart when inactive, you do not need to retrain from scratch every time:
+1. Go to the "02 · Classify Images" tab.
+2. Click the expander called "Load an existing .joblib model bundle (Optional)".
+3. Upload the .joblib file that was previously downloaded.
+4. You are ready to classify new photos immediately.
+
+
+HELPFUL TIPS FOR THE TEAM
+-------------------------
+- Use clear photos: Sharp, well-lit surface photos give the most accurate predictions.
+- Pay attention to "Low Confidence" tags: Photos with mixed sand and pebbles will be flagged so you can inspect them manually.
+- The app automatically ignores duplicate pictures during training so your scores stay honest.
